@@ -1,0 +1,1 @@
+Map<syn::punctuated::Iter<'_, syn::Field>, {closure@src/lib.rs:27:39: 27:42}>: quote::ToTokens

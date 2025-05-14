@@ -1,0 +1,11 @@
+/Users/xongxg/works/rust/proc-macro-workshop/builder/target/debug/deps/libtoml_write-4d6c2f92b1a6b90f.rmeta: /Users/xongxg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_write-0.1.1/src/lib.rs /Users/xongxg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_write-0.1.1/src/key.rs /Users/xongxg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_write-0.1.1/src/string.rs /Users/xongxg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_write-0.1.1/src/value.rs /Users/xongxg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_write-0.1.1/src/write.rs
+
+/Users/xongxg/works/rust/proc-macro-workshop/builder/target/debug/deps/libtoml_write-4d6c2f92b1a6b90f.rlib: /Users/xongxg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_write-0.1.1/src/lib.rs /Users/xongxg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_write-0.1.1/src/key.rs /Users/xongxg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_write-0.1.1/src/string.rs /Users/xongxg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_write-0.1.1/src/value.rs /Users/xongxg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_write-0.1.1/src/write.rs
+
+/Users/xongxg/works/rust/proc-macro-workshop/builder/target/debug/deps/toml_write-4d6c2f92b1a6b90f.d: /Users/xongxg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_write-0.1.1/src/lib.rs /Users/xongxg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_write-0.1.1/src/key.rs /Users/xongxg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_write-0.1.1/src/string.rs /Users/xongxg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_write-0.1.1/src/value.rs /Users/xongxg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_write-0.1.1/src/write.rs
+
+/Users/xongxg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_write-0.1.1/src/lib.rs:
+/Users/xongxg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_write-0.1.1/src/key.rs:
+/Users/xongxg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_write-0.1.1/src/string.rs:
+/Users/xongxg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_write-0.1.1/src/value.rs:
+/Users/xongxg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_write-0.1.1/src/write.rs:

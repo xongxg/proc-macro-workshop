@@ -1,0 +1,12 @@
+[package]
+name = "proc-macro-workshop"
+version = "0.1.0"
+edition = "2024"
+
+
+[[bin]]
+name = "workshop"
+path = "main.rs"
+
+[dependencies]
+derive_builder = { path = "builder" }
