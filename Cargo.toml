@@ -10,3 +10,5 @@ path = "main.rs"
 
 [dependencies]
 derive_builder = { path = "builder" }
+seq = { path = "seq" }
+customer_model = {path = "customer_model"}

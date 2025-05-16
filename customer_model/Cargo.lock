@@ -11,24 +11,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "derive_builder"
-version = "0.1.0"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn",
-]
-
-[[package]]
-name = "proc-macro-workshop"
-version = "0.1.0"
-dependencies = [
- "customer_model",
- "derive_builder",
- "seq 0.1.0",
-]
-
-[[package]]
 name = "proc-macro2"
 version = "1.0.95"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -45,19 +27,6 @@ checksum = "1885c039570dc00dcb4ff087a89e185fd56bae234ddc7f056a945bf36467248d"
 dependencies = [
  "proc-macro2",
 ]
-
-[[package]]
-name = "seq"
-version = "0.1.0"
-dependencies = [
- "seq 0.5.0",
-]
-
-[[package]]
-name = "seq"
-version = "0.5.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2305e6cd350e1e6d28a70f384845d184f0880e5ef4b48251532ae709016c4501"
 
 [[package]]
 name = "syn"
