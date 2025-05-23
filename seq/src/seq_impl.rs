@@ -1,7 +1,15 @@
-use proc_macro2::TokenTree;
+use proc_macro2::{TokenStream, TokenTree};
 use quote::quote;
+use syn::Token;
+use syn::buffer::Cursor;
 use syn::parse::{Parse, ParseStream};
+use syn::token::Token;
 
+
+
+/// Rust过程宏系列教程(4)--实现proc_macro_workshop项目之seq题目
+/// https://blog.ideawand.com/2021/10/17/rust_procedural_macro/rust_proc_marco_workshop_guide-04/
+///
 #[derive(Debug)]
 pub struct SeqMacroInput {
     name: syn::Ident,
@@ -17,7 +25,8 @@ impl Parse for SeqMacroInput {
 
         let start = input.parse::<syn::LitInt>()?;
         input.parse::<syn::Token![..]>()?;
-        let end = input.parse::<syn::LitInt>()?;
+        let inclusive = input.parse::<Token![=]>().ok();
+        let end = input.parse::<syn::LitInt>()?.base10_parse()?;
 
         let body_buff;
         syn::braced!(body_buff in input);
@@ -26,7 +35,7 @@ impl Parse for SeqMacroInput {
         let t = SeqMacroInput {
             name,
             start: start.base10_parse()?,
-            end: end.base10_parse()?,
+            end: if inclusive.is_some() { end + 1 } else { end },
             body,
         };
 
@@ -59,10 +68,9 @@ impl SeqMacroInput {
                                         && prefix.span().end() == p.span().start() // 校验是否连续，无空格
                                         && p.span().end() == i.span().start()
                                     {
-                                        let new_ident_litral =
-                                            format!("{}{}", prefix.to_string(), n);
+                                        let new_ident_litral = format!("{}{}", prefix, n);
                                         let new_ident = proc_macro2::Ident::new(
-                                            new_ident_litral.as_str(),
+                                            &new_ident_litral,
                                             prefix.span(),
                                         );
                                         res.extend(quote::quote!(#new_ident));
@@ -91,5 +99,82 @@ impl SeqMacroInput {
         }
 
         res
+    }
+
+    pub fn find_block_to_expand_and_do_expand(
+        &self,
+        cursor: Cursor,
+    ) -> (proc_macro2::TokenStream, bool) {
+        let mut found = false;
+        let mut res = proc_macro2::TokenStream::new();
+
+        let mut cursor = cursor;
+
+        while !cursor.eof() {
+            if let Some((punct_prefix, cursor1)) = cursor.punct() {
+                if punct_prefix.as_char() == '#' {
+                    if let Some((group_prefix, _, cursor2)) =
+                        cursor1.group(proc_macro2::Delimiter::Parenthesis)
+                    {
+                        if let Some((punct_suffix, cursor3)) = cursor2.punct() {
+                            if punct_suffix.as_char() == '*' {
+                                for i in self.start..self.end {
+                                    let t = self.expand(&group_prefix.token_stream(), i);
+
+                                    res.extend(t);
+                                }
+
+                                cursor = cursor3;
+                                found = true;
+
+                                continue;
+                            }
+                        }
+                    }
+                }
+            }
+
+            ///#(xxxxx)* not match
+            if let Some((group_cur, _, next_cur)) = cursor.group(proc_macro2::Delimiter::Brace) {
+                let (t, f) = self.find_block_to_expand_and_do_expand(group_cur);
+                res.extend(quote::quote!({#t}));
+
+                cursor = next_cur;
+                continue;
+            } else if let Some((group_cur, _, next_cur)) =
+                cursor.group(proc_macro2::Delimiter::Bracket)
+            {
+                let (t, f) = self.find_block_to_expand_and_do_expand(group_cur);
+                res.extend(quote::quote!({#t}));
+                cursor = next_cur;
+                continue;
+            } else if let Some((group_cur, _, next_cur)) =
+                cursor.group(proc_macro2::Delimiter::Parenthesis)
+            {
+                let (t, f) = self.find_block_to_expand_and_do_expand(group_cur);
+                res.extend(quote::quote!({#t}));
+                cursor = next_cur;
+                continue;
+            } else if let Some((punct, next_cur)) = cursor.punct() {
+                res.extend(quote::quote!(#punct));
+                cursor = next_cur;
+                continue;
+            } else if let Some((ident, next_cur)) = cursor.ident() {
+                res.extend(quote::quote!(#ident));
+                cursor = next_cur;
+                continue;
+            } else if let Some((literal, next_cur)) = cursor.literal() {
+                res.extend(quote::quote!(#literal));
+                cursor = next_cur;
+                continue;
+            } else if let Some((lifetime, next_cur)) = cursor.lifetime() {
+                // lifetime这种特殊的分类也是用cursor模式来处理的时候特有的，之前`proc_macro2::TokenTree`里面没有定义这个分类
+                res.extend(quote::quote!(#lifetime));
+                cursor = next_cur;
+                continue;
+            }
+        }
+
+        (res, found)
     }
 }

@@ -192,7 +192,7 @@ fn extend_method(f: &syn::Field) -> Option<(bool, proc_macro2::TokenStream)> {
             let value = meta.value()?;
             let s: LitStr = value.parse()?;
             arg_name = Some(s);
-            eprintln!("meta arg_name: {:#?}", arg_name);
+            // eprintln!("meta arg_name: {:#?}", arg_name);
 
             Ok(())
         } else {

@@ -1,2 +1,0 @@
-{closure@/Users/xongxg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde_derive-1.0.219/src/de.rs:709:51: 709:65}
-Map<Zip<Map<std::ops::Range<usize>, fn(usize) -> proc_macro2::Ident>, std::slice::Iter<'_, ast::Field<'_>>>, {closure@/Users/xongxg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde_derive-1.0.219/src/de.rs:709:51: 709:65}>

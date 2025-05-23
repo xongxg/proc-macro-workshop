@@ -1,8 +1,5 @@
-use customer_model::{DefaultNew, FieldCounter, Getters};
-use derive_builder::Builder;
-use seq::seq;
-use std::fmt::Debug;
-
+use custom_debug::CustomDebug;
+use std::fmt::{Debug, Formatter, Pointer};
 // #[derive(Builder, Debug)]
 // pub struct Command {
 //     executable: String,
@@ -27,6 +24,14 @@ use std::fmt::Debug;
 //     port: u16,
 // }
 
+#[derive(CustomDebug)]
+struct GeekKindergarten {
+    blog: String,
+    #[debug = "0b{:08b}"]
+    ideawand: i32,
+    com: bool,
+}
+
 fn main() {
     // let command = Command::builder()
     //     .executable("cargo".to_owned())
@@ -48,7 +53,16 @@ fn main() {
     //
     // println!("{}", config.host())
 
-    seq!(N in 0..8 {
-        // nothing
-    });
+    // seq!(N in 1..4 {
+    //     fn f #N() -> u64 {
+    //         N * 2
+    //     }
+    // });
+
+    let g = GeekKindergarten {
+        blog: "foo".into(),
+        ideawand: 123,
+        com: true,
+    };
+    println!("{:#?}", g);
 }
