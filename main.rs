@@ -1,5 +1,6 @@
 use custom_debug::CustomDebug;
 use std::fmt::{Debug, Formatter, Pointer};
+use std::marker::PhantomData;
 // #[derive(Builder, Debug)]
 // pub struct Command {
 //     executable: String,
@@ -24,13 +25,38 @@ use std::fmt::{Debug, Formatter, Pointer};
 //     port: u16,
 // }
 
-#[derive(CustomDebug)]
-struct GeekKindergarten {
-    blog: String,
-    #[debug = "0b{:08b}"]
-    ideawand: i32,
-    com: bool,
+// #[derive(CustomDebug)]
+// struct GeekKindergarten<T> {
+//     blog: T,
+//     #[debug = "0b{:08b}"]
+//     ideawand: i32,
+//     com: bool,
+// }
+
+// type S = String;
+//
+// #[derive(CustomDebug)]
+// pub struct Field<T> {
+//     marker: PhantomData<T>,
+//     string: S,
+//     #[debug = "0b{:08b}"]
+//     bitmask: u8,
+// }
+//
+// fn assert_debug<F: Debug>() {}
+
+pub trait Trait {
+    type Value;
 }
+
+#[derive(CustomDebug)]
+pub struct Field<T: Trait> {
+    values: Vec<T::Value>,
+    blog: T::Value,
+    ideawand: PhantomData<T::Value>,
+}
+
+fn assert_debug<F: Debug>() {}
 
 fn main() {
     // let command = Command::builder()
@@ -59,10 +85,25 @@ fn main() {
     //     }
     // });
 
-    let g = GeekKindergarten {
-        blog: "foo".into(),
-        ideawand: 123,
-        com: true,
-    };
-    println!("{:#?}", g);
+    // let g = GeekKindergarten {
+    //     blog: "foo",
+    //     ideawand: 1,
+    //     com: true,
+    // };
+    // println!("{:#?}", g);
+
+    // Does not implement Debug.
+    // struct NotDebug;
+    //
+    // assert_debug::<PhantomData<NotDebug>>();
+    // assert_debug::<Field<NotDebug>>();
+
+    #[derive(Debug)]
+struct Id;
+
+    impl Trait for Id {
+        type Value = u8;
+    }
+
+    assert_debug::<Field<Id>>();
 }
